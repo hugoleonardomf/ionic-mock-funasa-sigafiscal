@@ -35,8 +35,8 @@ import { Geolocation } from '@ionic-native/geolocation';
     Transfer,
     Camera,
     FilePath,
-    Geolocation,	
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    Geolocation,
+    { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })
-export class AppModule {}
+export class AppModule { }
