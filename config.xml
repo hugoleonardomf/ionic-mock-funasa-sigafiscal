@@ -78,6 +78,8 @@
     </platform>
     <allow-navigation href="http://187.24.132.64:8100" />
     <allow-navigation href="http://187.69.121.248:8100" />
+    <allow-navigation href="http://189.93.179.13:8100" />
+    <engine name="browser" spec="5.0.3" />
     <plugin name="cordova-plugin-camera" spec="^4.0.1" />
     <plugin name="cordova-plugin-file-transfer" spec="^1.7.0" />
     <plugin name="cordova-plugin-filepath" spec="^1.1.0" />

@@ -7,6 +7,7 @@ import { FilePath } from '@ionic-native/file-path';
 import { Camera } from '@ionic-native/camera';
 
 import { Geolocation } from '@ionic-native/geolocation';
+import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 
 declare var cordova: any;
 
@@ -23,8 +24,33 @@ export class HomePage {
   lat: number = 0;
   lng: number = 0;
 
-  constructor(public navCtrl: NavController, private camera: Camera, private transfer: Transfer, private file: File, private filePath: FilePath, public actionSheetCtrl: ActionSheetController, public toastCtrl: ToastController, public platform: Platform, public loadingCtrl: LoadingController, private geolocation: Geolocation) {
+  lista: any = [];
+
+  constructor(public navCtrl: NavController, private camera: Camera, private transfer: Transfer, private file: File, private filePath: FilePath, public actionSheetCtrl: ActionSheetController, public toastCtrl: ToastController, public platform: Platform, public loadingCtrl: LoadingController, private geolocation: Geolocation, private sqlite: SQLite) {
     //
+  }
+
+  ionViewDidLoad() {
+    this.getData();
+  }
+
+  getData() {
+    this.sqlite.create({
+      name: 'ionicdb.db',
+      location: 'default'
+    }).then((db: SQLiteObject) => {
+      db.executeSql('CREATE TABLE IF NOT EXISTS pastas(rowid INTEGER PRIMARY KEY, descricao, date TEXT)', {})
+        .then(res => console.log('Executed SQL'))
+        .catch(e => console.log(e));
+      db.executeSql('SELECT * FROM pastas ORDER BY rowid DESC', {})
+        .then(res => {
+          this.lista = [];
+          for (var i = 0; i < res.rows.length; i++) {
+            this.lista.push({ rowid: res.rows.item(i).rowid, descricao: res.rows.item(i).descricao, date: res.rows.item(i).date })
+          }
+        })
+        .catch(e => console.log(e));
+    }).catch(e => console.log(e));
   }
 
   onLocateUser() {
@@ -54,8 +80,14 @@ export class HomePage {
 
   public presentActionSheet() {
     let actionSheet = this.actionSheetCtrl.create({
-      title: 'Capturar Imagem',
+      title: 'Selecionar fonte de imagem',
       buttons: [
+        {
+          text: 'Abrir da Biblioteca',
+          handler: () => {
+            this.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY);
+          }
+        },
         {
           text: 'Usar Câmera',
           handler: () => {

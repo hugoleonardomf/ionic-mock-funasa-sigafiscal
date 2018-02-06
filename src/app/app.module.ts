@@ -13,6 +13,8 @@ import { FilePath } from '@ionic-native/file-path';
 import { Camera } from '@ionic-native/camera';
 
 import { Geolocation } from '@ionic-native/geolocation';
+import { SQLite } from '@ionic-native/sqlite';
+
 
 @NgModule({
   declarations: [
@@ -36,7 +38,8 @@ import { Geolocation } from '@ionic-native/geolocation';
     Camera,
     FilePath,
     Geolocation,
-    { provide: ErrorHandler, useClass: IonicErrorHandler }
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    SQLite
   ]
 })
 export class AppModule { }
