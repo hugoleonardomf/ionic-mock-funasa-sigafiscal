@@ -42,6 +42,12 @@ export class HomePage {
       db.executeSql('CREATE TABLE IF NOT EXISTS pastas(rowid INTEGER PRIMARY KEY, descricao, date TEXT)', {})
         .then(res => console.log('Executed SQL'))
         .catch(e => console.log(e));
+      db.executeSql('INSERT INTO pastas(rowid, descricao, date) VALUES(10, "descricao", "data")', {})
+        .then(res => console.log('Executed SQL 2'))
+        .catch(e => console.log(e));
+      db.executeSql('INSERT INTO pastas(rowid, descricao, date) VALUES(20, "descricao", "data")', {})
+        .then(res => console.log('Executed SQL 2'))
+        .catch(e => console.log(e));
       db.executeSql('SELECT * FROM pastas ORDER BY rowid DESC', {})
         .then(res => {
           this.lista = [];

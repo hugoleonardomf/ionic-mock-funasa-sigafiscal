@@ -2,6 +2,9 @@
   <ion-navbar color="funasa">
     <ion-title>SIGA FISCAL - Organizar Projetos</ion-title>
     <ion-buttons end>
+      <button ion-button icon-left (click)="presentActionSheet()">
+        <ion-icon name="camera"></ion-icon>
+      </button>
       <button ion-button icon-only (click)="addTeste()">
         <ion-icon name="md-add"></ion-icon>
       </button>
@@ -24,7 +27,7 @@
           <br> Descrição: {{l.descricao}}
         </p>
         <h3 item-end>
-          Final
+          {{l.rowid}} - {{i}}
         </h3>
       </ion-item>
       <ion-item-options side="right">
@@ -41,16 +44,3 @@
   <img src="{{pathForImage(lastImage)}}" style="width: 100%" [hidden]="lastImage === null">
   <h3 [hidden]="lastImage !== null">...</h3>
 </ion-content>
-
-<ion-footer>
-  <ion-toolbar color="funasa">
-    <ion-buttons>
-      <button ion-button icon-left (click)="presentActionSheet()">
-        <ion-icon name="camera"></ion-icon>
-      </button>
-      <button ion-button icon-left (click)="clearAll()">
-        Limpar
-      </button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-footer>
