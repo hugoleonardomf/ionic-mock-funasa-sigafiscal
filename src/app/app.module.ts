@@ -3,18 +3,15 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
+import { HttpClientModule } from '@angular/common/http';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 
-import { File } from '@ionic-native/file';
-import { Transfer } from '@ionic-native/transfer';
-import { FilePath } from '@ionic-native/file-path';
-import { Camera } from '@ionic-native/camera';
+import { IonicStorageModule } from '@ionic/storage';
+import { DatePipe } from '@angular/common';
 
-import { Geolocation } from '@ionic-native/geolocation';
-import { SQLite } from '@ionic-native/sqlite';
-
+import { FiscalProvider } from '../providers/fiscal/fiscal';
 
 @NgModule({
   declarations: [
@@ -23,7 +20,12 @@ import { SQLite } from '@ionic-native/sqlite';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    HttpClientModule,
+    IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot({
+      name: '__mydb',
+         driverOrder: ['indexeddb', 'sqlite', 'websql']
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -33,13 +35,10 @@ import { SQLite } from '@ionic-native/sqlite';
   providers: [
     StatusBar,
     SplashScreen,
-    File,
-    Transfer,
-    Camera,
-    FilePath,
-    Geolocation,
+    HttpClientModule,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    SQLite
+    DatePipe,
+    FiscalProvider
   ]
 })
 export class AppModule { }

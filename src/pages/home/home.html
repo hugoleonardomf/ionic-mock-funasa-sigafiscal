@@ -2,10 +2,7 @@
   <ion-navbar color="funasa">
     <ion-title>SIGA FISCAL - Organizar Projetos</ion-title>
     <ion-buttons end>
-      <button ion-button icon-left (click)="presentActionSheet()">
-        <ion-icon name="camera"></ion-icon>
-      </button>
-      <button ion-button icon-only (click)="addTeste()">
+      <button ion-button icon-only (click)="add()">
         <ion-icon name="md-add"></ion-icon>
       </button>
       <button ion-button icon-only>
@@ -16,31 +13,31 @@
 </ion-header>
 
 <ion-content padding>
-  <span>Lat: {{lat}}, Long: {{lng}}</span>
-  <br />
 
   <ion-list>
-    <ion-item-sliding *ngFor="let l of lista; let i=index">
-      <ion-item nopadding>
+    <ion-item-sliding *ngFor="let item of pastas; let i=index">
+      <ion-item>
         <p>
-          <span>{{l.date}}</span>
-          <br> Descrição: {{l.descricao}}
+          <!--
+          {{item.pasta.descricao | uppercase}}
+          -->
+          {{i + 1}}) {{item.pasta.descricao}}
+          <br>
+          <span>{{item.pasta.criacao | date: 'dd/MM/yyyy - H:mm'}}</span>
         </p>
         <h3 item-end>
-          {{l.rowid}} - {{i}}
+          {{item.key}}
         </h3>
       </ion-item>
       <ion-item-options side="right">
-        <button ion-button color="primary">
+        <button ion-button color="primary" (click)="edit(item)">
           <ion-icon name="paper"></ion-icon>
         </button>
-        <button ion-button color="danger">
+        <button ion-button color="danger" (click)="confirmRemove(item);">
           <ion-icon name="trash"></ion-icon>
         </button>
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
 
-  <img src="{{pathForImage(lastImage)}}" style="width: 100%" [hidden]="lastImage === null">
-  <h3 [hidden]="lastImage !== null">...</h3>
 </ion-content>

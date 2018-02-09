@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="br.gov.funasa" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="br.gov.funasa.fiscalizacao" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>SIGA Fiscal</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
@@ -80,7 +80,10 @@
     <allow-navigation href="http://187.69.121.248:8100" />
     <allow-navigation href="http://189.93.179.13:8100" />
     <allow-navigation href="http://189.93.135.201:8100" />
+    <allow-navigation href="http://10.61.250.20:8100" />
+    <allow-navigation href="http://177.56.253.92:8100" />
     <engine name="browser" spec="5.0.3" />
+    <engine name="android" spec="^6.3.0" />
     <plugin name="cordova-plugin-camera" spec="^4.0.1" />
     <plugin name="cordova-plugin-file-transfer" spec="^1.7.0" />
     <plugin name="cordova-plugin-filepath" spec="^1.1.0" />
@@ -96,5 +99,4 @@
     </plugin>
     <plugin name="cordova-sqlite-storage" spec="^2.2.0" />
     <plugin name="cordova-plugin-file" spec="^5.0.0" />
-    <allow-navigation href="http://10.61.250.20:8100" />
 </widget>
