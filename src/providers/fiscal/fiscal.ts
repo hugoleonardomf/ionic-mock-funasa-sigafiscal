@@ -31,14 +31,13 @@ export class FiscalProvider {
   }
 
   public getAllPastas() {
-
     let pastas: PastaList[] = [];
-
     return this.storage.forEach((value: Pasta, key: string, iterationNumber: Number) => {
       let pasta = new PastaList();
       pasta.key = key;
       pasta.pasta = value;
       pastas.push(pasta);
+      pastas.reverse();
     })
       .then(() => {
         return Promise.resolve(pastas);

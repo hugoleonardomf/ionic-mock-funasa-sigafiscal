@@ -18,10 +18,7 @@
     <ion-item-sliding *ngFor="let item of pastas; let i=index">
       <ion-item>
         <p>
-          <!--
-          {{item.pasta.descricao | uppercase}}
-          -->
-          {{i + 1}}) {{item.pasta.descricao}}
+          {{item.pasta.descricao}}
           <br>
           <span>{{item.pasta.criacao | date: 'dd/MM/yyyy - H:mm'}}</span>
         </p>
@@ -29,11 +26,11 @@
           {{item.key}}
         </h3>
       </ion-item>
-      <ion-item-options side="right">
-        <button ion-button color="primary" (click)="edit(item)">
+      <ion-item-options side="right" (ionSwipe)="confirmRemove(item)">
+        <button ion-button color="primary" (click)="edit(item)" medium>
           <ion-icon name="paper"></ion-icon>
         </button>
-        <button ion-button color="danger" (click)="confirmRemove(item);">
+        <button ion-button color="danger" (click)="confirmRemove(item);" expandable medium>
           <ion-icon name="trash"></ion-icon>
         </button>
       </ion-item-options>
