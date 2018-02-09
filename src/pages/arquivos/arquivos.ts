@@ -1,25 +1,22 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the ArquivosPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { Pasta } from '../../providers/fiscal/fiscal';
 
 @IonicPage()
 @Component({
   selector: 'page-arquivos',
   templateUrl: 'arquivos.html',
 })
+
 export class ArquivosPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+  pasta: Pasta;
+  key: string;
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ArquivosPage');
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.pasta = { descricao: "TESTE MOCK", criacao: new Date() };
+    //this.pasta = this.navParams.get('pasta');
+    //this.key = this.navParams.get('key');
   }
 
 }

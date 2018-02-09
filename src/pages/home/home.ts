@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, ToastController, AlertController } from 'ionic-angular';
+import { NavController, ToastController, AlertController, ActionSheetController } from 'ionic-angular';
 
 import { FiscalProvider, PastaList } from '../../providers/fiscal/fiscal';
 
@@ -12,7 +12,7 @@ export class HomePage {
 
   pastas: PastaList[];
 
-  constructor(public navCtrl: NavController, private fiscalProvider: FiscalProvider, private toast: ToastController, private alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, private fiscalProvider: FiscalProvider, private toast: ToastController, private alertCtrl: AlertController, public actionSheetCtrl: ActionSheetController) {
     //
   }
 
@@ -24,8 +24,8 @@ export class HomePage {
     console.log(this.pastas);
   }
 
-  selectItem(item: PastaList) {
-    this.navCtrl.push('ArquivosPage', { key: item.key, contact: item.pasta });
+  itemSelected(item: PastaList) {
+    this.navCtrl.push('ArquivosPage', { key: item.key, pasta: item.pasta });
   }
 
   add() {
@@ -67,6 +67,29 @@ export class HomePage {
       ]
     });
     alert.present();
+  }
+
+  opcoesActionSheet() {
+    let actionSheet = this.actionSheetCtrl.create({
+      //title: 'Options',
+      buttons: [
+        {
+          text: 'Sobre o aplicativo',
+          handler: () => {
+            console.log('Sobre clicked');
+          }
+        },
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
+    });
+
+    actionSheet.present();
   }
 
 }
