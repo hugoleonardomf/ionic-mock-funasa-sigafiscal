@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar color="funasa">
-    <ion-title>SIGA FISCAL - Organizar Projetos</ion-title>
+    <ion-title>SIGA FISCAL - Organizar</ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="add()">
         <ion-icon name="md-add"></ion-icon>
@@ -17,14 +17,15 @@
   <ion-list>
     <ion-item-sliding *ngFor="let item of pastas; let i=index">
       <ion-item (click)="itemSelected(item)">
-        <p>
+        <h2>
           {{item.pasta.descricao}}
-          <br>
-          <span>{{item.pasta.criacao | date: 'dd/MM/yyyy - H:mm'}}</span>
+        </h2>
+        <p>
+          {{item.pasta.criacao | date: 'dd/MM/yyyy - H:mm'}}
         </p>
-        <h3 item-end>
-          {{item.key}}
-        </h3>
+        <p item-end>
+          0 fotos
+        </p>
       </ion-item>
       <ion-item-options side="right" (ionSwipe)="confirmRemove(item)">
         <button ion-button color="primary" (click)="edit(item)" medium>
