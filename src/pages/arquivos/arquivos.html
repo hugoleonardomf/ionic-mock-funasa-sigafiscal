@@ -1,11 +1,30 @@
 <ion-header>
   <ion-navbar color="funasa">
-    <ion-title>{{pasta.descricao}}</ion-title>
+    <ion-title>{{pastaList.pasta.descricao}}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="takePicture()" padding-right>
+        <ion-icon name="md-camera"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
-
 </ion-header>
 
 
 <ion-content padding>
+
+  <ion-list>
+    <ion-item *ngFor="let item of arquivos; let i=index" (click)="itemSelected(item)">
+      <ion-avatar item-start>
+        <img [src]="item.imagem" *ngIf="item.imagem" />
+      </ion-avatar>
+      <h2>
+        {{item.criacao | date: 'dd/MM/yyyy - H:mm'}}
+      </h2>
+      <p>
+        {{item.descricao ? item.descricao : '-'}}
+      </p>
+    </ion-item>
+
+  </ion-list>
 
 </ion-content>

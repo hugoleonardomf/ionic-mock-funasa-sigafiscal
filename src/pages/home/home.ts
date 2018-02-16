@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NavController, ToastController, AlertController, ActionSheetController } from 'ionic-angular';
 
 import { FiscalProvider, PastaList } from '../../providers/fiscal/fiscal';
+import { EditPastaPage } from '../edit-pasta/edit-pasta';
+import { ArquivosPage } from '../arquivos/arquivos';
 
 @Component({
   selector: 'page-home',
@@ -21,22 +23,22 @@ export class HomePage {
       .then((result) => {
         this.pastas = result;
       });
-    console.log(this.pastas);
   }
 
   itemSelected(item: PastaList) {
-    this.navCtrl.push('ArquivosPage', { key: item.key, pasta: item.pasta });
+    item.pasta.arquivos.reverse();
+    this.navCtrl.push(ArquivosPage, { pastaList: item });
   }
 
-  add() {
-    this.navCtrl.push('EditPastaPage');
+  addPasta() {
+    this.navCtrl.push(EditPastaPage);
   }
 
-  edit(item: PastaList) {
-    this.navCtrl.push('EditPastaPage', { key: item.key, contact: item.pasta });
+  editPasta(item: PastaList) {
+    this.navCtrl.push(EditPastaPage, { key: item.key, pasta: item.pasta });
   }
 
-  remove(item: PastaList) {
+  removePasta(item: PastaList) {
     this.fiscalProvider.removePasta(item.key)
       .then(() => {
         // Removendo do array de items
@@ -46,7 +48,7 @@ export class HomePage {
       })
   }
 
-  confirmRemove(item: PastaList) {
+  confirmRemovePasta(item: PastaList) {
     let alert = this.alertCtrl.create({
       title: 'Deseja excluir ' + item.pasta.descricao + '?',
       message: 'Os arquivos também serão excluídos!',
@@ -61,7 +63,7 @@ export class HomePage {
         {
           text: 'Excluir',
           handler: () => {
-            this.remove(item);
+            this.removePasta(item);
           }
         }
       ]
@@ -71,8 +73,14 @@ export class HomePage {
 
   opcoesActionSheet() {
     let actionSheet = this.actionSheetCtrl.create({
-      //title: 'Options',
+      title: 'O que deseja fazer?',
       buttons: [
+        {
+          text: 'Adicionar Pasta',
+          handler: () => {
+            this.addPasta();
+          }
+        },
         {
           text: 'Sobre o aplicativo',
           handler: () => {

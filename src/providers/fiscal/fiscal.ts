@@ -7,13 +7,13 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class FiscalProvider {
 
-  constructor(public http: HttpClient, private storage: Storage, private datepipe: DatePipe) {
-    //
-  }
+  constructor(public http: HttpClient, private storage: Storage, private datepipe: DatePipe) { }
 
+  //PASTAS
   public insertPasta(pasta: Pasta) {
     let key = this.datepipe.transform(new Date(), "ddMMyyyyHHmmss");
     pasta.criacao = new Date();
+    pasta.arquivos = new Array<any>();
     return this.savePasta(key, pasta);
   }
 
@@ -37,24 +37,32 @@ export class FiscalProvider {
       pasta.key = key;
       pasta.pasta = value;
       pastas.push(pasta);
-      pastas.reverse();
+      //pastas.reverse();
     })
       .then(() => {
+        pastas.reverse();
         return Promise.resolve(pastas);
       })
       .catch((error) => {
         return Promise.reject(error);
       });
   }
-
 }
 
 export class Pasta {
   descricao: string;
   criacao: Date;
+  arquivos: Arquivo[];
 }
 
 export class PastaList {
   key: string;
   pasta: Pasta;
+}
+
+export class Arquivo {
+  id: string;
+  imagem: string;
+  descricao: string;
+  criacao: Date;
 }

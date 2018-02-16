@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-navbar color="funasa">
+    <ion-title>{{this.model.id ? 'Editar Foto' : 'Nova Foto'}}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="save()" padding-right>
+        <ion-icon name="md-checkbox"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-item>
+    <ion-input #descricao type="text" name="descricao" [(ngModel)]="model.descricao" placeholder="Informe uma descrição"></ion-input>
+    <img [src]="base64Image" *ngIf="base64Image" />
+  </ion-item>
+
+</ion-content>

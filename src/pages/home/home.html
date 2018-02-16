@@ -2,9 +2,11 @@
   <ion-navbar color="funasa">
     <ion-title>SIGA FISCAL - Organizar</ion-title>
     <ion-buttons end>
+      <!--
       <button ion-button icon-only (click)="add()">
         <ion-icon name="md-add"></ion-icon>
       </button>
+      -->
       <button ion-button icon-only (click)="opcoesActionSheet()">
         <ion-icon name="md-more"></ion-icon>
       </button>
@@ -24,14 +26,14 @@
           {{item.pasta.criacao | date: 'dd/MM/yyyy - H:mm'}}
         </p>
         <p item-end>
-          0 fotos
+          {{item.pasta.arquivos.length}} arquivos
         </p>
       </ion-item>
-      <ion-item-options side="right" (ionSwipe)="confirmRemove(item)">
-        <button ion-button color="primary" (click)="edit(item)" medium>
+      <ion-item-options side="right" (ionSwipe)="confirmRemovePasta(item)">
+        <button ion-button color="primary" (click)="editPasta(item)" medium>
           <ion-icon name="paper"></ion-icon>
         </button>
-        <button ion-button color="danger" (click)="confirmRemove(item);" expandable medium>
+        <button ion-button color="danger" (click)="confirmRemovePasta(item);" expandable medium>
           <ion-icon name="trash"></ion-icon>
         </button>
       </ion-item-options>

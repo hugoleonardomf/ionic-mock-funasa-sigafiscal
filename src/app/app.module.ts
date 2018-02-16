@@ -9,14 +9,22 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 
 import { IonicStorageModule } from '@ionic/storage';
+import { Camera } from '@ionic-native/camera';
 import { DatePipe } from '@angular/common';
 
 import { FiscalProvider } from '../providers/fiscal/fiscal';
 
+import { EditPastaPage } from '../pages/edit-pasta/edit-pasta';
+import { ArquivosPage } from '../pages/arquivos/arquivos';
+import { ConfirmaImagemPage } from '../pages/confirma-imagem/confirma-imagem';
+
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    EditPastaPage,
+    ArquivosPage,
+    ConfirmaImagemPage
   ],
   imports: [
     BrowserModule,
@@ -24,19 +32,23 @@ import { FiscalProvider } from '../providers/fiscal/fiscal';
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot({
       name: '__mydb',
-         driverOrder: ['indexeddb', 'sqlite', 'websql']
+      driverOrder: ['indexeddb', 'sqlite', 'websql']
     })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    EditPastaPage,
+    ArquivosPage,
+    ConfirmaImagemPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     HttpClientModule,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
+    Camera,
     DatePipe,
     FiscalProvider
   ]

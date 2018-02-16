@@ -13,8 +13,8 @@ export class EditPastaPage {
   key: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private fiscalProvider: FiscalProvider, private toast: ToastController) {
-    if (this.navParams.data.contact && this.navParams.data.key) {
-      this.model = this.navParams.data.contact;
+    if (this.navParams.data.pasta && this.navParams.data.key) {
+      this.model = this.navParams.data.pasta;
       this.key = this.navParams.data.key;
     } else {
       this.model = new Pasta();
