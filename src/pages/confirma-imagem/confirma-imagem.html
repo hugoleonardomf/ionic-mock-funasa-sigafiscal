@@ -3,7 +3,7 @@
     <ion-title>{{this.model.id ? 'Editar Foto' : 'Nova Foto'}}</ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="save()" padding-right>
-        <ion-icon name="md-checkbox"></ion-icon>
+        <ion-icon name="md-checkmark-circle-outline"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -13,8 +13,15 @@
 <ion-content padding>
 
   <ion-item>
-    <ion-input #descricao type="text" name="descricao" [(ngModel)]="model.descricao" placeholder="Informe uma descrição"></ion-input>
-    <img [src]="base64Image" *ngIf="base64Image" />
+    <ion-input #descricao type="text" name="descricao" [(ngModel)]="model.descricao" placeholder="Informe uma descrição (opcional)"></ion-input>
   </ion-item>
+
+  <div padding>
+    <img [src]="base64Image" />
+  </div>
+
+  <div text-center margin-top padding-top *ngIf="this.model.id">
+    <button ion-button color="danger" round outline (click)="confirmRemove()">Excluir</button>
+  </div>
 
 </ion-content>

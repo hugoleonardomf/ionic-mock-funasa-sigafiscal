@@ -14,9 +14,9 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
 
-  <ion-list>
+  <ion-list *ngIf="pastas?.length > 0">
     <ion-item-sliding *ngFor="let item of pastas; let i=index">
       <ion-item (click)="itemSelected(item)">
         <h2>
@@ -30,14 +30,22 @@
         </p>
       </ion-item>
       <ion-item-options side="right" (ionSwipe)="confirmRemovePasta(item)">
-        <button ion-button color="primary" (click)="editPasta(item)" medium>
+        <button ion-button color="primary" (click)="editPasta(item)" large padding-left padding-right>
           <ion-icon name="paper"></ion-icon>
         </button>
-        <button ion-button color="danger" (click)="confirmRemovePasta(item);" expandable medium>
+        <button ion-button color="danger" (click)="confirmRemovePasta(item);" large large padding-left padding-right>
           <ion-icon name="trash"></ion-icon>
         </button>
       </ion-item-options>
     </ion-item-sliding>
+  </ion-list>
+
+  <ion-list *ngIf="pastas?.length == 0">
+    <ion-item>
+      <p padding-top>
+        Nenhum item cadastrado
+      </p>
+    </ion-item>
   </ion-list>
 
 </ion-content>

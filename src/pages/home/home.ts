@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, ToastController, AlertController, ActionSheetController } from 'ionic-angular';
+import { NavController, ToastController, AlertController, ActionSheetController, LoadingController } from 'ionic-angular';
 
 import { FiscalProvider, PastaList } from '../../providers/fiscal/fiscal';
 import { EditPastaPage } from '../edit-pasta/edit-pasta';
@@ -14,15 +14,24 @@ export class HomePage {
 
   pastas: PastaList[];
 
-  constructor(public navCtrl: NavController, private fiscalProvider: FiscalProvider, private toast: ToastController, private alertCtrl: AlertController, public actionSheetCtrl: ActionSheetController) {
-    //
+  constructor(public navCtrl: NavController, private fiscalProvider: FiscalProvider, private toast: ToastController, private alertCtrl: AlertController, public actionSheetCtrl: ActionSheetController, public loadingCtrl: LoadingController) {
+    this.loadData();
   }
 
   ionViewDidEnter() {
+    //
+  }
+
+  private loadData() {
+    let loading = this.loadingCtrl.create({
+      content: 'Carregando...'
+    });
+    loading.present();
     this.fiscalProvider.getAllPastas()
       .then((result) => {
         this.pastas = result;
       });
+    loading.dismiss();
   }
 
   itemSelected(item: PastaList) {
@@ -44,7 +53,7 @@ export class HomePage {
         // Removendo do array de items
         var index = this.pastas.indexOf(item);
         this.pastas.splice(index, 1);
-        this.toast.create({ message: 'Item removido com sucesso.', duration: 3000, position: 'botton' }).present();
+        this.toast.create({ message: 'Removido com sucesso.', duration: 3000, position: 'botton' }).present();
       })
   }
 

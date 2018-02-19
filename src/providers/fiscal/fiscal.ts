@@ -37,7 +37,6 @@ export class FiscalProvider {
       pasta.key = key;
       pasta.pasta = value;
       pastas.push(pasta);
-      //pastas.reverse();
     })
       .then(() => {
         pastas.reverse();

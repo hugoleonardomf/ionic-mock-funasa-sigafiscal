@@ -10,9 +10,9 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
 
-  <ion-list>
+  <ion-list *ngIf="arquivos?.length > 0">
     <ion-item *ngFor="let item of arquivos; let i=index" (click)="itemSelected(item)">
       <ion-avatar item-start>
         <img [src]="item.imagem" *ngIf="item.imagem" />
@@ -24,7 +24,14 @@
         {{item.descricao ? item.descricao : '-'}}
       </p>
     </ion-item>
+  </ion-list>
 
+  <ion-list *ngIf="arquivos?.length == 0">
+    <ion-item>
+      <p padding-top>
+        Nenhum item cadastrado
+      </p>
+    </ion-item>
   </ion-list>
 
 </ion-content>

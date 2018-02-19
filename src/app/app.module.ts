@@ -29,7 +29,10 @@ import { ConfirmaImagemPage } from '../pages/confirma-imagem/confirma-imagem';
   imports: [
     BrowserModule,
     HttpClientModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp, {
+      backButtonText: '',
+      mode: 'md'
+    }),
     IonicStorageModule.forRoot({
       name: '__mydb',
       driverOrder: ['indexeddb', 'sqlite', 'websql']
