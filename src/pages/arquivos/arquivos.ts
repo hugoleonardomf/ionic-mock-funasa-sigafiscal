@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, Platform, ActionSheetController } from 'ionic-angular';
+import { IonicPage, NavController, ToastController, NavParams, LoadingController, Platform, ActionSheetController } from 'ionic-angular';
 import { Camera } from '@ionic-native/camera';
 import { Arquivo, PastaList } from '../../providers/fiscal/fiscal';
 import { ConfirmaImagemPage } from '../confirma-imagem/confirma-imagem';
@@ -19,7 +19,7 @@ export class ArquivosPage {
   modoSelecao: boolean;
   qtdSelecao: number;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private camera: Camera, public loadingCtrl: LoadingController, public platform: Platform, public actionSheetCtrl: ActionSheetController) {
+  constructor(public navCtrl: NavController, private toast: ToastController, public navParams: NavParams, private camera: Camera, public loadingCtrl: LoadingController, public platform: Platform, public actionSheetCtrl: ActionSheetController) {
     this.modoSelecao = false;
     if (this.navParams.get('pastaList')) {
       this.pastaList = this.navParams.get('pastaList');
@@ -123,6 +123,7 @@ export class ArquivosPage {
     for (let i of this.arquivos) {
       i.selecao = false;
     }
+    this.toast.create({ message: 'Selecione os items para sincronizar.', duration: 3000, position: 'top' }).present();
   }
 
   sync() {
