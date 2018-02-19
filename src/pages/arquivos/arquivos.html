@@ -1,9 +1,17 @@
 <ion-header>
   <ion-navbar color="funasa">
     <ion-title>{{pastaList.pasta.descricao}}</ion-title>
-    <ion-buttons end>
-      <button ion-button icon-only (click)="takePicture()" padding-right>
+    <ion-buttons end *ngIf="!modoSelecao">
+      <button ion-button icon-only (click)="takePicture()">
         <ion-icon name="md-camera"></ion-icon>
+      </button>
+      <button ion-button icon-only (click)="opcoesActionSheet()">
+        <ion-icon name="md-more"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons end *ngIf="modoSelecao">
+      <button ion-button icon-only padding-right (click)="cancelarSync()">
+        <ion-icon name="md-close"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -11,7 +19,6 @@
 
 
 <ion-content>
-
   <ion-list *ngIf="arquivos?.length > 0">
     <ion-item *ngFor="let item of arquivos; let i=index" (click)="itemSelected(item)">
       <ion-avatar item-start>
@@ -33,5 +40,14 @@
       </p>
     </ion-item>
   </ion-list>
+
+  <ion-footer *ngIf="modoSelecao">
+    <ion-toolbar>
+      <p padding-left>10 items selecionados</p>
+      <ion-buttons end padding-right>
+        <button ion-button color="primary" round (click)="sync()">Sincronizar</button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-footer>
 
 </ion-content>

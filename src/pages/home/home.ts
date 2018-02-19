@@ -19,7 +19,7 @@ export class HomePage {
   }
 
   ionViewDidEnter() {
-    //
+    this.getData();
   }
 
   private loadData() {
@@ -27,11 +27,15 @@ export class HomePage {
       content: 'Carregando...'
     });
     loading.present();
+    this.getData();
+    loading.dismiss();
+  }
+
+  private getData() {
     this.fiscalProvider.getAllPastas()
       .then((result) => {
         this.pastas = result;
       });
-    loading.dismiss();
   }
 
   itemSelected(item: PastaList) {

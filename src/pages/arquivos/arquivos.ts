@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, Platform, ActionSheetController } from 'ionic-angular';
 import { Camera } from '@ionic-native/camera';
 import { Arquivo, PastaList } from '../../providers/fiscal/fiscal';
 import { ConfirmaImagemPage } from '../confirma-imagem/confirma-imagem';
@@ -15,9 +15,13 @@ export class ArquivosPage {
   arquivos: Arquivo[];
   pastaList: PastaList;
   base64Image: string;
+  modoSelecao: boolean;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private camera: Camera, public loadingCtrl: LoadingController, public platform: Platform) {
-    this.pastaList = this.navParams.get('pastaList');
+  constructor(public navCtrl: NavController, public navParams: NavParams, private camera: Camera, public loadingCtrl: LoadingController, public platform: Platform, public actionSheetCtrl: ActionSheetController) {
+    this.modoSelecao = false;
+    if(this.navParams.get('pastaList')) {
+      this.pastaList = this.navParams.get('pastaList');
+    }
     this.loadData();
   }
 
@@ -60,6 +64,49 @@ export class ArquivosPage {
         console.log(err);
       });
     }
+  }
+
+  opcoesActionSheet() {
+    let actionSheet = this.actionSheetCtrl.create({
+      //title: 'O que deseja fazer?',
+      buttons: [
+        {
+          text: 'Adicionar Foto',
+          handler: () => {
+            this.takePicture();
+          }
+        },
+        {
+          text: 'Sincronizar',
+          handler: () => {
+            this.preparaSync();
+          }
+        },
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
+    });
+
+    actionSheet.present();
+  }
+
+  cancelarSync(){
+    this.modoSelecao = false;
+    //limpar lista seleção
+  }
+
+  preparaSync(){
+    this.modoSelecao = true;
+  }
+
+  sync(){
+    this.modoSelecao = false;
+    //enviar arquivos
   }
 
 }
