@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController  } from 'ionic-angular';
+import { File } from '@ionic-native/file';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { FiscalProvider, PastaList, Arquivo } from '../../providers/fiscal/fiscal';
 import { DatePipe } from '@angular/common';
 
@@ -15,9 +16,9 @@ export class ConfirmaImagemPage {
   pastaList: PastaList;
   base64Image: string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private fiscalProvider: FiscalProvider, private datepipe: DatePipe, private alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public file: File, public navParams: NavParams, private fiscalProvider: FiscalProvider, private datepipe: DatePipe, private alertCtrl: AlertController) {
     this.pastaList = this.navParams.get('pastaList');
-    if(this.navParams.get('arquivo')){ //edit
+    if (this.navParams.get('arquivo')) { //edit
       this.model = this.navParams.get('arquivo');
       this.base64Image = this.model.imagem;
     }
