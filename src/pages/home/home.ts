@@ -35,7 +35,12 @@ export class HomePage {
     this.fiscalProvider.getAllPastas()
       .then((result) => {
         this.pastas = result;
+        this.sortPastas();
       });
+  }
+
+  private sortPastas() {
+    this.pastas.sort((a, b) => new Date(b.pasta.criacao).getTime() - new Date(a.pasta.criacao).getTime());
   }
 
   itemSelected(item: PastaList) {
@@ -97,7 +102,7 @@ export class HomePage {
         {
           text: 'Sobre o aplicativo',
           handler: () => {
-            console.log('Sobre clicked');
+            this.showAlert();
           }
         },
         {
@@ -112,5 +117,14 @@ export class HomePage {
 
     actionSheet.present();
   }
+
+  showAlert() {
+    let alert = this.alertCtrl.create({
+      title: 'Sobre',
+      subTitle: '...',
+      buttons: ['OK']
+    });
+    alert.present();
+  }  
 
 }
