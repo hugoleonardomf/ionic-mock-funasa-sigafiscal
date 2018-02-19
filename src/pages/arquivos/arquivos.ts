@@ -15,18 +15,20 @@ export class ArquivosPage {
   arquivos: Arquivo[];
   pastaList: PastaList;
   base64Image: string;
+
   modoSelecao: boolean;
+  qtdSelecao: number;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private camera: Camera, public loadingCtrl: LoadingController, public platform: Platform, public actionSheetCtrl: ActionSheetController) {
     this.modoSelecao = false;
-    if(this.navParams.get('pastaList')) {
+    if (this.navParams.get('pastaList')) {
       this.pastaList = this.navParams.get('pastaList');
     }
     this.loadData();
   }
 
   ionViewDidEnter() {
-    //
+    this.sortArquivos();
   }
 
   private loadData() {
@@ -36,6 +38,10 @@ export class ArquivosPage {
     loading.present();
     this.arquivos = this.pastaList.pasta.arquivos;
     loading.dismiss();
+  }
+
+  private sortArquivos() {
+    this.arquivos.sort((a, b) => new Date(b.criacao).getTime() - new Date(a.criacao).getTime());
   }
 
   itemSelected(item: Arquivo) {
@@ -95,16 +101,31 @@ export class ArquivosPage {
     actionSheet.present();
   }
 
-  cancelarSync(){
+  setItemSync(item: Arquivo) {
+    if(item.selecao) {
+      item.selecao = false;
+      this.qtdSelecao--;
+    }
+    else {
+      item.selecao = true;
+      this.qtdSelecao++;
+    }
+  }
+
+  cancelarSync() {
     this.modoSelecao = false;
     //limpar lista seleção
   }
 
-  preparaSync(){
+  preparaSync() {
     this.modoSelecao = true;
+    this.qtdSelecao = 0;
+    for (let i of this.arquivos) {
+      i.selecao = false;
+    }
   }
 
-  sync(){
+  sync() {
     this.modoSelecao = false;
     //enviar arquivos
   }

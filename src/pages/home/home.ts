@@ -57,7 +57,7 @@ export class HomePage {
         // Removendo do array de items
         var index = this.pastas.indexOf(item);
         this.pastas.splice(index, 1);
-        this.toast.create({ message: 'Removido com sucesso.', duration: 3000, position: 'botton' }).present();
+        this.toast.create({ message: 'Item removido com sucesso.', duration: 3000, position: 'botton' }).present();
       })
   }
 

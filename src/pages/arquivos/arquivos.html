@@ -30,6 +30,9 @@
       <p>
         {{item.descricao ? item.descricao : '-'}}
       </p>
+      <ion-icon name="md-pin" item-end color="light" *ngIf="!modoSelecao"></ion-icon>
+      <ion-icon name="md-checkmark-circle-outline" item-end color="light" *ngIf="modoSelecao && !item.selecao" (click)="setItemSync(item); $event.stopPropagation();"></ion-icon>
+      <ion-icon name="md-checkmark-circle-outline" item-end color="secondary" *ngIf="modoSelecao && item.selecao" (click)="setItemSync(item); $event.stopPropagation();"></ion-icon>
     </ion-item>
   </ion-list>
 
@@ -43,7 +46,7 @@
 
   <ion-footer *ngIf="modoSelecao">
     <ion-toolbar>
-      <p padding-left>10 items selecionados</p>
+      <p padding-left>{{qtdSelecao}} items selecionados</p>
       <ion-buttons end padding-right>
         <button ion-button color="primary" round (click)="sync()">Sincronizar</button>
       </ion-buttons>

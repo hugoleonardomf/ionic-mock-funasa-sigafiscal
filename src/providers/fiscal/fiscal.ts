@@ -64,4 +64,5 @@ export class Arquivo {
   imagem: string;
   descricao: string;
   criacao: Date;
+  selecao: boolean;
 }
