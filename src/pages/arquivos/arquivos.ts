@@ -5,6 +5,8 @@ import { File } from '@ionic-native/file';
 import { Arquivo, PastaList } from '../../providers/fiscal/fiscal';
 import { ConfirmaImagemPage } from '../confirma-imagem/confirma-imagem';
 
+declare var window;
+
 @IonicPage()
 @Component({
   selector: 'page-arquivos',
@@ -51,9 +53,11 @@ export class ArquivosPage {
   }
 
   takePicture() {
+    let fileSize = '';
     if (this.platform.is('mobileweb')) { //browser - ionic serve
       this.base64Image = "data:image/jpg;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7";
-      this.navCtrl.push(ConfirmaImagemPage, { base64Image: this.base64Image, pastaList: this.pastaList });
+      fileSize = '100';
+      this.navCtrl.push(ConfirmaImagemPage, { base64Image: this.base64Image, fileSize: fileSize, pastaList: this.pastaList });
     }
     else {
       this.camera.getPicture({
@@ -67,8 +71,15 @@ export class ArquivosPage {
       }).then((imageData) => {
         // imageData is a base64 encoded string
         this.base64Image = "data:image/jpeg;base64," + imageData;
-        console.log(this.file.resolveLocalFilesystemUrl(this.base64Image));
-        this.navCtrl.push(ConfirmaImagemPage, { base64Image: this.base64Image, pastaList: this.pastaList });
+        //console.log(this.file.resolveLocalFilesystemUrl(this.base64Image));
+
+        window.resolveLocalFileSystemURL(this.base64Image, (fileEntry) => {
+          fileEntry.getMetadata((metadata) => {
+            fileSize = metadata.size;
+          });
+        }, (error) => { console.error(error); });
+
+        this.navCtrl.push(ConfirmaImagemPage, { base64Image: this.base64Image, fileSize: fileSize, pastaList: this.pastaList });
       }, (err) => {
         console.log(err);
       });
@@ -126,7 +137,7 @@ export class ArquivosPage {
     for (let i of this.arquivos) {
       i.selecao = false;
     }
-    this.toast.create({ message: 'Selecione os items para sincronizar.', duration: 3000, position: 'top' }).present();
+    this.toast.create({ message: 'Selecione os items para sincronizar.', duration: 3000, position: 'bottom' }).present();
   }
 
   sync() {

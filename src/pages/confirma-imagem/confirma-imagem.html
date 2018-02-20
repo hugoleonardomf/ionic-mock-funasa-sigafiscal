@@ -12,6 +12,10 @@
 
 <ion-content padding>
 
+  <ion-item padding-bottom>
+    <ion-input #size type="text" name="size" [(ngModel)]="model.tamanho" placeholder="{{fileSize}}"></ion-input>
+  </ion-item>
+
   <ion-item>
     <ion-input #descricao type="text" name="descricao" [(ngModel)]="model.descricao" placeholder="Informe uma descrição (opcional)"></ion-input>
   </ion-item>

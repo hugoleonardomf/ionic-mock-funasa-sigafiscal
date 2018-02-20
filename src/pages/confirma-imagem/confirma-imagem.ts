@@ -15,6 +15,7 @@ export class ConfirmaImagemPage {
   model: Arquivo;
   pastaList: PastaList;
   base64Image: string;
+  fileSize: string;
 
   constructor(public navCtrl: NavController, public file: File, public navParams: NavParams, private fiscalProvider: FiscalProvider, private datepipe: DatePipe, private alertCtrl: AlertController) {
     this.pastaList = this.navParams.get('pastaList');
@@ -25,6 +26,7 @@ export class ConfirmaImagemPage {
     else { //create
       this.model = new Arquivo();
       this.base64Image = this.navParams.get('base64Image');
+      this.fileSize = this.navParams.get('fileSize');
     }
   }
 

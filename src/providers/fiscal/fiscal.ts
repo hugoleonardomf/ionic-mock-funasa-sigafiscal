@@ -63,6 +63,7 @@ export class Arquivo {
   id: string;
   imagem: string;
   descricao: string;
+  tamanho: string;
   criacao: Date;
   selecao: boolean;
 }
