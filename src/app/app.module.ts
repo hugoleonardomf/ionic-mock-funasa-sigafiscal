@@ -10,6 +10,7 @@ import { HomePage } from '../pages/home/home';
 
 import { IonicStorageModule } from '@ionic/storage';
 import { Camera } from '@ionic-native/camera';
+import { Geolocation } from '@ionic-native/geolocation';
 import { File } from '@ionic-native/file';
 import { DatePipe } from '@angular/common';
 
@@ -53,6 +54,7 @@ import { ConfirmaImagemPage } from '../pages/confirma-imagem/confirma-imagem';
     HttpClientModule,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     Camera,
+    Geolocation,
     File,
     DatePipe,
     FiscalProvider

@@ -69,7 +69,7 @@ export class HomePage {
   confirmRemovePasta(item: PastaList) {
     let alert = this.alertCtrl.create({
       title: 'Deseja excluir ' + item.pasta.descricao + '?',
-      message: 'Os arquivos também serão excluídos!',
+      message: 'Todos os arquivos também serão excluídos!',
       buttons: [
         {
           text: 'Cancelar',

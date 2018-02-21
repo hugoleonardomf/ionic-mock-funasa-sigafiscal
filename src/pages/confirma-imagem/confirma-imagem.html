@@ -2,7 +2,7 @@
   <ion-navbar color="funasa">
     <ion-title>{{this.model.id ? 'Editar Foto' : 'Nova Foto'}}</ion-title>
     <ion-buttons end>
-      <button ion-button icon-only (click)="save()" padding-right>
+      <button ion-button icon-only (click)="save()">
         <ion-icon name="md-checkmark"></ion-icon>
       </button>
     </ion-buttons>
@@ -13,11 +13,13 @@
 <ion-content padding>
 
   <ion-item padding-bottom>
-    <ion-input #size type="text" name="size" [(ngModel)]="model.tamanho" placeholder="{{fileSize}}"></ion-input>
+    {{model.lat}}, {{model.long}}
   </ion-item>
-
+  <ion-item padding-bottom>
+    {{model.tamanho}}kb
+  </ion-item>
   <ion-item>
-    <ion-input #descricao type="text" name="descricao" [(ngModel)]="model.descricao" placeholder="Informe uma descrição (opcional)"></ion-input>
+    <ion-input type="text" name="descricao" [(ngModel)]="model.descricao" placeholder="Informe uma descrição (opcional)"></ion-input>
   </ion-item>
 
   <div padding>

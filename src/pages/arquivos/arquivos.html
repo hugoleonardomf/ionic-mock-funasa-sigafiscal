@@ -10,13 +10,12 @@
       </button>
     </ion-buttons>
     <ion-buttons end *ngIf="modoSelecao">
-      <button ion-button icon-only padding-right (click)="cancelarSync()">
-        <ion-icon name="md-close"></ion-icon>
+      <button ion-button icon-only (click)="cancelarSync()">
+        <ion-icon name="md-close" style="padding-right:11px;"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
-
 
 <ion-content>
   <ion-list *ngIf="arquivos?.length > 0">
@@ -28,9 +27,9 @@
         {{item.criacao | date: 'dd/MM/yyyy - H:mm'}}
       </h2>
       <p>
-        {{item.descricao ? item.descricao : '-'}}
+        {{item.lat}}, {{item.long}}
       </p>
-      <ion-icon name="md-pin" item-end color="light" *ngIf="!modoSelecao"></ion-icon>
+      <p item-right *ngIf="!modoSelecao">{{item.tamanho}}kb</p>
       <ion-icon name="md-checkmark-circle-outline" item-end color="light" *ngIf="modoSelecao && !item.selecao" (click)="setItemSync(item); $event.stopPropagation();"></ion-icon>
       <ion-icon name="md-checkmark-circle-outline" item-end color="secondary" *ngIf="modoSelecao && item.selecao" (click)="setItemSync(item); $event.stopPropagation();"></ion-icon>
     </ion-item>

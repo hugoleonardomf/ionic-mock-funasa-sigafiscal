@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, ToastController, NavParams, LoadingController, Platform, ActionSheetController } from 'ionic-angular';
 import { Camera } from '@ionic-native/camera';
-import { File } from '@ionic-native/file';
+import { Geolocation } from '@ionic-native/geolocation';
 import { Arquivo, PastaList } from '../../providers/fiscal/fiscal';
 import { ConfirmaImagemPage } from '../confirma-imagem/confirma-imagem';
-
-declare var window;
 
 @IonicPage()
 @Component({
@@ -17,17 +15,14 @@ export class ArquivosPage {
 
   arquivos: Arquivo[];
   pastaList: PastaList;
-  base64Image: string;
 
   // modo sync
   modoSelecao: boolean;
   qtdSelecao: number;
 
-  constructor(public navCtrl: NavController, private file: File, private toast: ToastController, public navParams: NavParams, private camera: Camera, public loadingCtrl: LoadingController, public platform: Platform, public actionSheetCtrl: ActionSheetController) {
+  constructor(public navCtrl: NavController, private toast: ToastController, public navParams: NavParams, private camera: Camera, public loadingCtrl: LoadingController, public platform: Platform, public actionSheetCtrl: ActionSheetController, private geolocation: Geolocation) {
     this.modoSelecao = false;
-    if (this.navParams.get('pastaList')) {
-      this.pastaList = this.navParams.get('pastaList');
-    }
+    this.pastaList = this.navParams.get('pastaList');
     this.loadData();
   }
 
@@ -53,11 +48,14 @@ export class ArquivosPage {
   }
 
   takePicture() {
-    let fileSize = '';
-    if (this.platform.is('mobileweb')) { //browser - ionic serve
-      this.base64Image = "data:image/jpg;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7";
-      fileSize = '100';
-      this.navCtrl.push(ConfirmaImagemPage, { base64Image: this.base64Image, fileSize: fileSize, pastaList: this.pastaList });
+    let arquivo = new Arquivo();
+    this.geolocation.getCurrentPosition().then((resp) => {
+      arquivo.lat = resp.coords.latitude + '';
+      arquivo.long = resp.coords.longitude + '';
+    }).catch((error) => { console.log('Error getting location', error); });
+    //se browser - ionic serve
+    if (this.platform.is('mobileweb')) {
+      arquivo.imagem = "data:image/jpg;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7";
     }
     else {
       this.camera.getPicture({
@@ -65,25 +63,13 @@ export class ArquivosPage {
         sourceType: this.camera.PictureSourceType.CAMERA,
         saveToPhotoAlbum: false,
         quality: 100,
-        allowEdit: false,
-        //targetWidth: 1000,
-        //targetHeight: 1000
+        allowEdit: false
       }).then((imageData) => {
-        // imageData is a base64 encoded string
-        this.base64Image = "data:image/jpeg;base64," + imageData;
-        //console.log(this.file.resolveLocalFilesystemUrl(this.base64Image));
-
-        window.resolveLocalFileSystemURL(this.base64Image, (fileEntry) => {
-          fileEntry.getMetadata((metadata) => {
-            fileSize = metadata.size;
-          });
-        }, (error) => { console.error(error); });
-
-        this.navCtrl.push(ConfirmaImagemPage, { base64Image: this.base64Image, fileSize: fileSize, pastaList: this.pastaList });
-      }, (err) => {
-        console.log(err);
-      });
+        arquivo.imagem = "data:image/jpeg;base64," + imageData;
+      }, (err) => { console.log(err); });
     }
+    arquivo.tamanho = '100';
+    this.navCtrl.push(ConfirmaImagemPage, { arquivo: arquivo, pastaList: this.pastaList });
   }
 
   opcoesActionSheet() {
