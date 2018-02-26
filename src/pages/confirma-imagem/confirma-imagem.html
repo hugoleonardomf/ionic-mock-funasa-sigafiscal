@@ -12,11 +12,8 @@
 
 <ion-content padding>
 
-  <ion-item padding-bottom>
-    {{model.lat}}, {{model.long}}
-  </ion-item>
-  <ion-item padding-bottom>
-    {{model.tamanho}}kb
+  <ion-item padding-bottom *ngIf="editMode">
+    <ion-input type="text" name="latlong" value="{{model.lat}}, {{model.long}}" disabled></ion-input>
   </ion-item>
   <ion-item>
     <ion-input type="text" name="descricao" [(ngModel)]="model.descricao" placeholder="Informe uma descrição (opcional)"></ion-input>
@@ -26,7 +23,7 @@
     <img [src]="base64Image" />
   </div>
 
-  <div text-center margin-top padding-top *ngIf="this.model.id">
+  <div text-center margin-top padding-top *ngIf="editMode">
     <button ion-button color="danger" round outline (click)="confirmRemove()">Excluir</button>
   </div>
 

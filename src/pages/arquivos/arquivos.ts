@@ -49,15 +49,19 @@ export class ArquivosPage {
 
   takePicture() {
     let arquivo = new Arquivo();
+    //current position
     this.geolocation.getCurrentPosition().then((resp) => {
       arquivo.lat = resp.coords.latitude + '';
       arquivo.long = resp.coords.longitude + '';
     }).catch((error) => { console.log('Error getting location', error); });
-    //se browser - ionic serve
-    if (this.platform.is('mobileweb')) {
+    console.log(this.platform.platforms());
+    if (this.platform.is('mobileweb') || this.platform.is('core')) {
+      console.log('browser');
       arquivo.imagem = "data:image/jpg;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7";
+      this.navCtrl.push(ConfirmaImagemPage, { arquivo: arquivo, pastaList: this.pastaList });
     }
     else {
+      console.log('device');
       this.camera.getPicture({
         destinationType: this.camera.DestinationType.DATA_URL,
         sourceType: this.camera.PictureSourceType.CAMERA,
@@ -66,10 +70,9 @@ export class ArquivosPage {
         allowEdit: false
       }).then((imageData) => {
         arquivo.imagem = "data:image/jpeg;base64," + imageData;
+        this.navCtrl.push(ConfirmaImagemPage, { arquivo: arquivo, pastaList: this.pastaList });
       }, (err) => { console.log(err); });
     }
-    arquivo.tamanho = '100';
-    this.navCtrl.push(ConfirmaImagemPage, { arquivo: arquivo, pastaList: this.pastaList });
   }
 
   opcoesActionSheet() {

@@ -18,6 +18,7 @@
 </ion-header>
 
 <ion-content>
+
   <ion-list *ngIf="arquivos?.length > 0">
     <ion-item *ngFor="let item of arquivos; let i=index" (click)="itemSelected(item)">
       <ion-avatar item-start>
@@ -29,7 +30,7 @@
       <p>
         {{item.lat}}, {{item.long}}
       </p>
-      <p item-right *ngIf="!modoSelecao">{{item.tamanho}}kb</p>
+      <ion-icon name="md-pin" item-end color="light" *ngIf="!modoSelecao"></ion-icon>
       <ion-icon name="md-checkmark-circle-outline" item-end color="light" *ngIf="modoSelecao && !item.selecao" (click)="setItemSync(item); $event.stopPropagation();"></ion-icon>
       <ion-icon name="md-checkmark-circle-outline" item-end color="secondary" *ngIf="modoSelecao && item.selecao" (click)="setItemSync(item); $event.stopPropagation();"></ion-icon>
     </ion-item>
@@ -47,7 +48,7 @@
     <ion-toolbar>
       <p padding-left>{{qtdSelecao}} items selecionados</p>
       <ion-buttons end padding-right>
-        <button ion-button color="primary" round (click)="sync()">Sincronizar</button>
+        <button ion-button color="primary" (click)="sync()">Sincronizar</button>
       </ion-buttons>
     </ion-toolbar>
   </ion-footer>
